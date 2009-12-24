@@ -10,7 +10,7 @@ package com.godstroke.FlxBlockBreaker
 		protected var _vessel:Vessel;
 		private var defaultAcceleration:int = 15;
 		private var current_magnus_force:Number = 0; // force caused by the rotation on contact with the vessel
-		private var vessel_friction:Number = 0.02; // used for calculating magnus force
+		private var vessel_friction:Number = 0.002; // used for calculating magnus force
 		private var angle_delta:Number = 0;
 		private var max_angle_delta:Number = 25;
 		
@@ -80,9 +80,7 @@ package com.godstroke.FlxBlockBreaker
 			//if( (p>0 && magnusForce<0 ) || (p<0 && magnusForce>0 ) )trace("p "+p+" mag "+magnusForce)
 			//if(magnusForce!=0)trace("mag "+magnusForce)
 			
-			
 			p += -magnusForce;
-			
 			
 			direction.y = -Math.abs(direction.y);
 			velocity.y = -Math.abs(velocity.y);
@@ -107,6 +105,7 @@ package com.godstroke.FlxBlockBreaker
 		}
 		
 		override public function update():void{
+			
 			if(y>FlxG.height || y<0 || x>FlxG.width || x<0){
 				die();
 			}
@@ -126,7 +125,7 @@ package com.godstroke.FlxBlockBreaker
 				trace("ü "+angle_delta);
 				//angle+=angle_delta;
 				*/
-				angle += current_magnus_force;
+				angle += current_magnus_force*15;
 			}
 			super.update();
 		}
@@ -154,7 +153,7 @@ package com.godstroke.FlxBlockBreaker
 		public function calculateMagnusForce(vessel:Vessel):Number{
 			var magnusForce:Number =(vessel_friction*vessel.velocity.x);
 			current_magnus_force = magnusForce;
-			return magnusForce;
+			return magnusForce*vessel.widthLevel;
 		}
 		
 	}

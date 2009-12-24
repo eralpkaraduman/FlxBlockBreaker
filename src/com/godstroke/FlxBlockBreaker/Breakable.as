@@ -45,7 +45,7 @@ package com.godstroke.FlxBlockBreaker
 			}
 			
 			// BONUS GAIN AKA. ATTRIBUTES
-			if(Math.round(Math.random()*5)==0){
+			if(Math.round(Math.random()*10)==0){
 				if(!PlayState(FlxG.state).justDroppedAttribute){
 					// drop
 					dropAttribute();

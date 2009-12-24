@@ -102,12 +102,20 @@ package com.godstroke.FlxBlockBreaker
 		// **** ATTRIBUTE FUNCTIONS A.K.A. BONUSES  ****
 		// *********************************************
 		
+		public function bonus_life():void{
+			trace("bonus_life");
+			vessel.gainLife(1);
+			displayLives();
+		}
+		
  		public function attribute_vessel_wide():void{
 			trace("WIDER");
+			vessel.changeWidthLevel(+1);
 		}
 		
 		public function attribute_vessel_narrow():void{
 			trace("NARROW");
+			vessel.changeWidthLevel(-1);
 		}
 		// *********************************************
 		

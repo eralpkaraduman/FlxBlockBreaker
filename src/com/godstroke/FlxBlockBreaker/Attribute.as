@@ -13,14 +13,28 @@ package com.godstroke.FlxBlockBreaker
 			super(X, Y);
 			createGraphic(30,10,0x88685431);
 			attributeArray=[
-				new AttributeType(10,true,"-length","attribute_vessel_wide",0),
-				new AttributeType(11,false,"+length","attribute_vessel_narrow",0)
+				new AttributeType(1/2,10,true,"+length","attribute_vessel_wide",0),
+				new AttributeType(1/4,11,false,"-length","attribute_vessel_narrow",0),
+				new AttributeType(1/4,20,true,"+life","bonus_life",0)
 			];
 			choose();
 		}
 		
 		private function choose():void{
-			type = attributeArray[1];
+
+			var sumOfProbs:Number = 0;
+			var rand:Number = Math.random();
+			selectionLoop : for each(var a:AttributeType in attributeArray){
+				sumOfProbs+=a.chance;
+				if(rand<=sumOfProbs){
+					type = a; // selected
+					break selectionLoop;
+				}
+			}
+			if(sumOfProbs!=1)trace("WARNING sum of drop chances is not 1 !  leaks: "+(sumOfProbs-1));
+			
+			///*TEST*/type = attributeArray[0];
+			
 			//-
 			title_txt = new FlxText(-500,-500,200);
 			title_txt.text = type.name;

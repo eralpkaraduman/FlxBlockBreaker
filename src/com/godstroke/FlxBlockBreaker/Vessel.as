@@ -5,10 +5,10 @@ package com.godstroke.FlxBlockBreaker
 
 	public class Vessel extends FlxSprite
 	{
-		private var baseWidth:int =50; // minimum width, this can be multiplied by bonuses
+		private var baseWidth:int =60; // minimum width, this can be multiplied by bonuses
 		public var widthLevel:int = 2; // max 3
 		
-		public var frictionLevel:int = 4; // hard 30
+		public var frictionLevel:int = 2; // hard 30
 		private var defaultAcceleration:int = 20;
 		private var lives:Number = 3;
 		
@@ -66,6 +66,15 @@ package com.godstroke.FlxBlockBreaker
 				velocity.x = 0;
 				x=FlxG.width-width;
 			}
+		}
+		
+		public function changeWidthLevel(delta:Number):void{
+			widthLevel+=delta;
+			// limits
+			if(widthLevel<1){widthLevel = 1; return;} 
+			if(widthLevel>3){widthLevel = 3; return;}
+			createGraphic(baseWidth*widthLevel,10,0xff3a5c39);
+			x-=(delta*baseWidth)/2; // centerize;
 		}
 		
 	}
