@@ -45,12 +45,10 @@ package com.godstroke.FlxBlockBreaker
 			}
 			
 			// BONUS GAIN AKA. ATTRIBUTES
-			if(Math.round(Math.random()*3)==0){
+			if(Math.round(Math.random()*5)==0){
 				if(!PlayState(FlxG.state).justDroppedAttribute){
 					// drop
-					var att:Attribute = new Attribute(x,y)
-					PlayState(FlxG.state).addDrop(att);
-					FlxG.state.add(att);
+					dropAttribute();
 				}
 				PlayState(FlxG.state).justDroppedAttribute = true;
 			}else{
@@ -59,7 +57,9 @@ package com.godstroke.FlxBlockBreaker
 		}
 		
 		private function dropAttribute():void{
-			
+			var att:Attribute = new Attribute(x,y)
+			PlayState(FlxG.state).addDrop(att);
+			FlxG.state.add(att);
 		}
 		
 	}

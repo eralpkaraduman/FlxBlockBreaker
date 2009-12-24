@@ -10,7 +10,7 @@ package com.godstroke.FlxBlockBreaker
 		protected var _vessel:Vessel;
 		private var defaultAcceleration:int = 15;
 		private var current_magnus_force:Number = 0; // force caused by the rotation on contact with the vessel
-		private var vessel_friction:Number = 0.008; // used for calculating magnus force
+		private var vessel_friction:Number = 0.02; // used for calculating magnus force
 		private var angle_delta:Number = 0;
 		private var max_angle_delta:Number = 25;
 		
@@ -72,16 +72,17 @@ package com.godstroke.FlxBlockBreaker
 			var p:Number = touchDeltaPointX/(vessel.width/2);
 			if(p>1)p=1; if(p<-1)p=-1;
 			
-			var magnusForce:Number =(vessel_friction*vessel.velocity.x);
+			//var magnusForce:Number =(vessel_friction*vessel.velocity.x);
+			var magnusForce:Number = calculateMagnusForce(vessel);
 			//trace("p "+p);
 			//trace("magnus "+magnusForce);
 			
-			if( (p>0 && magnusForce<0 ) || (p<0 && magnusForce>0 ) )trace("p "+p+" mag "+magnusForce)
-			if(magnusForce!=0)trace("mag "+magnusForce)
+			//if( (p>0 && magnusForce<0 ) || (p<0 && magnusForce>0 ) )trace("p "+p+" mag "+magnusForce)
+			//if(magnusForce!=0)trace("mag "+magnusForce)
 			
 			
 			p += -magnusForce;
-			current_magnus_force = magnusForce;
+			
 			
 			direction.y = -Math.abs(direction.y);
 			velocity.y = -Math.abs(velocity.y);
@@ -97,6 +98,10 @@ package com.godstroke.FlxBlockBreaker
 		public function release():void{
 			docked =false;
 			direction.y = -1; // TODO: ekranın üst yarısındaysa aşağı, alt yarısındaysa yukarı doğru release olsun
+			
+			direction.x = calculateMagnusForce(_vessel);
+			velocity.x = Math.abs(velocity.x)*direction.x;
+			
 			// TODO: x directionu random olabilir
 			//trace("release");
 		}
@@ -144,6 +149,12 @@ package com.godstroke.FlxBlockBreaker
 					//direction.x = 0.01;
 				} 
 			}
+		}
+		
+		public function calculateMagnusForce(vessel:Vessel):Number{
+			var magnusForce:Number =(vessel_friction*vessel.velocity.x);
+			current_magnus_force = magnusForce;
+			return magnusForce;
 		}
 		
 	}

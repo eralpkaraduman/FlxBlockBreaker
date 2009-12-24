@@ -9,7 +9,7 @@ package com.godstroke.FlxBlockBreaker
 		public var widthLevel:int = 2; // max 3
 		
 		public var frictionLevel:int = 4; // hard 30
-		private var defaultAcceleration:int = 30;
+		private var defaultAcceleration:int = 20;
 		private var lives:Number = 3;
 		
 		public function Vessel(X:int=0, Y:int=0)
