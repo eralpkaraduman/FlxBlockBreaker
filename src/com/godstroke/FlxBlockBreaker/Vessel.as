@@ -8,8 +8,8 @@ package com.godstroke.FlxBlockBreaker
 		private var baseWidth:int =50; // minimum width, this can be multiplied by bonuses
 		public var widthLevel:int = 2; // max 3
 		
-		public var frictionLevel:int = 2; // hard 30
-		private var defaultAcceleration:int = 40;
+		public var frictionLevel:int = 4; // hard 30
+		private var defaultAcceleration:int = 30;
 		private var lives:Number = 3;
 		
 		public function Vessel(X:int=0, Y:int=0)

@@ -8,7 +8,11 @@ package com.godstroke.FlxBlockBreaker
 	{
 		protected var docked:Boolean = false;
 		protected var _vessel:Vessel;
-		private var defaultAcceleration:int = 20;
+		private var defaultAcceleration:int = 15;
+		private var current_magnus_force:Number = 0; // force caused by the rotation on contact with the vessel
+		private var vessel_friction:Number = 0.008; // used for calculating magnus force
+		private var angle_delta:Number = 0;
+		private var max_angle_delta:Number = 25;
 		
 		private var direction:Point;
 		
@@ -30,7 +34,6 @@ package com.godstroke.FlxBlockBreaker
 		}
 		
 		// COLLISION
-		
 		override public function hitCeiling(Contact:FlxCore=null):Boolean {
 			velocity.y = Math.abs(velocity.y);
 			direction.y = Math.abs(direction.y);
@@ -51,19 +54,42 @@ package com.godstroke.FlxBlockBreaker
 		
 		override public function hitFloor(Contact:FlxCore=null):Boolean {
 			// case hit vessel
-			var touchDeltaPointX:Number = (Contact.x - x + Contact.width/2 - width/2);
-			var p:Number = touchDeltaPointX/(Contact.width/2);
-			if(p>1)p=1; if(p<-1)p=-1;
-			
-			direction.y = -Math.abs(direction.y*Math.abs(p));
+			if(Contact is Vessel){
+				hitVessel(Contact as Vessel);
+				return true;
+			}
+			// else
 			velocity.y = -Math.abs(velocity.y);
+			direction.y = -Math.abs(direction.y);
 			
-			velocity.x = Math.abs(direction.y)*-p;
-			direction.x = -p;
-			// -
 			hitBreakableCase(Contact);
 			
-			return true; 
+			return true;
+		}
+		
+		private function hitVessel(vessel:Vessel):void{
+			var touchDeltaPointX:Number = (vessel.x - x + vessel.width/2 - width/2);
+			var p:Number = touchDeltaPointX/(vessel.width/2);
+			if(p>1)p=1; if(p<-1)p=-1;
+			
+			var magnusForce:Number =(vessel_friction*vessel.velocity.x);
+			//trace("p "+p);
+			//trace("magnus "+magnusForce);
+			
+			if( (p>0 && magnusForce<0 ) || (p<0 && magnusForce>0 ) )trace("p "+p+" mag "+magnusForce)
+			if(magnusForce!=0)trace("mag "+magnusForce)
+			
+			
+			p += -magnusForce;
+			current_magnus_force = magnusForce;
+			
+			direction.y = -Math.abs(direction.y);
+			velocity.y = -Math.abs(velocity.y);
+
+			direction.x = -p;
+			velocity.x = Math.abs(velocity.x)*direction.x;
+			
+			hitBreakableCase(vessel);
 		}
 		
 		// *
@@ -72,7 +98,7 @@ package com.godstroke.FlxBlockBreaker
 			docked =false;
 			direction.y = -1; // TODO: ekranın üst yarısındaysa aşağı, alt yarısındaysa yukarı doğru release olsun
 			// TODO: x directionu random olabilir
-			trace("release");
+			//trace("release");
 		}
 		
 		override public function update():void{
@@ -86,10 +112,16 @@ package com.godstroke.FlxBlockBreaker
 				x = _vessel.x + _vessel.width/2 - width/2 ;
 				y = _vessel.y -height;
 			}else if(!docked){
-				//velocity.x += defaultAcceleration;
 				velocity.y += direction.y*defaultAcceleration;
 				velocity.x += direction.x*defaultAcceleration;
-				angle+=(direction.x*20);
+				/*
+				angle_delta += (current_magnus_force/1000);
+				trace(angle_delta);
+				if(Math.abs(angle_delta)>Math.abs(max_angle_delta))angle_delta= (angle_delta<0 ? -max_angle_delta : +max_angle_delta );
+				trace("ü "+angle_delta);
+				//angle+=angle_delta;
+				*/
+				angle += current_magnus_force;
 			}
 			super.update();
 		}
@@ -98,18 +130,18 @@ package com.godstroke.FlxBlockBreaker
 			dead = true; // kill the ball if it has fallen off
 			visible =false;
 			// explode
-			
 			// playsatate checks if all cannonballs are alive
 		}
 		
 		public function hitBreakableCase(Contact:FlxCore=null):void{
 			if(Contact is Breakable){
+				
 				Breakable(Contact).hit();
 				 if(direction.x == 0 && x<= FlxG.width/2){
-					direction.x = -0.01;
+					//direction.x = -0.01;
 				}
 				else if(direction.x == 0 && x> FlxG.width/2){
-					direction.x = 0.01;
+					//direction.x = 0.01;
 				} 
 			}
 		}
