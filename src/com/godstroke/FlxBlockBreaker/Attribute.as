@@ -13,7 +13,7 @@ package com.godstroke.FlxBlockBreaker
 			super(X, Y);
 			createGraphic(30,10,0x88685431);
 			attributeArray=[
-				new AttributeType(1/2,10,true,"+length","attribute_vessel_wide",0),
+				new AttributeType(2/4,10,true,"+length","attribute_vessel_wide",0),
 				new AttributeType(1/4,11,false,"-length","attribute_vessel_narrow",0),
 				new AttributeType(1/4,20,true,"+life","bonus_life",0)
 			];
