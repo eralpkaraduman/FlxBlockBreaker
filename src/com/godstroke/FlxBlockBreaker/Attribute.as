@@ -11,13 +11,24 @@ package com.godstroke.FlxBlockBreaker
 		public function Attribute(X:int=0, Y:int=0)
 		{
 			super(X, Y);
-			createGraphic(30,10,0x88685431);
+			
 			attributeArray=[
-				new AttributeType(2/4,10,true,"+length","attribute_vessel_wide",0),
-				new AttributeType(1/4,11,false,"-length","attribute_vessel_narrow",0),
-				new AttributeType(1/4,20,true,"+life","bonus_life",0)
+				//new AttributeType(3/8,10,true,"+length","attribute_vessel_wide",0),
+				//new AttributeType(2/8,11,false,"-length","attribute_vessel_narrow",0),
+				//new AttributeType(2/8,20,true,"+life","bonus_life",0),
+				new AttributeType(8/8,20,false,"frost","add_frost",0)
 			];
+			
 			choose();
+			var bad_color:Number = 0x55ff0000;
+			var good_color:Number = 0x5500ff00;
+			createGraphic(30,10,type.good?good_color:bad_color);
+			
+			title_txt = new FlxText(-500,-500,200);
+			title_txt.text = type.name;
+			title_txt.alignment ="center";
+			FlxG.state.add(title_txt);
+			
 		}
 		
 		private function choose():void{
@@ -32,14 +43,6 @@ package com.godstroke.FlxBlockBreaker
 				}
 			}
 			if(sumOfProbs!=1)trace("WARNING sum of drop chances is not 1 !  leaks: "+(sumOfProbs-1));
-			
-			///*TEST*/type = attributeArray[0];
-			
-			//-
-			title_txt = new FlxText(-500,-500,200);
-			title_txt.text = type.name;
-			title_txt.alignment ="center";
-			FlxG.state.add(title_txt);
 		}
 		
 		override public function update():void{
@@ -47,7 +50,7 @@ package com.godstroke.FlxBlockBreaker
 				title_txt.velocity.y = -20;
 				title_txt.alpha-=0.04;
 			}else{
-				velocity.y = 40;
+				velocity.y = 80;
 				title_txt.x = x-title_txt.width/2+width/2;
 				title_txt.y = y-13;
 			}

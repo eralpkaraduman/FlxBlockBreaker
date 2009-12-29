@@ -117,6 +117,11 @@ package com.godstroke.FlxBlockBreaker
 			trace("NARROW");
 			vessel.changeWidthLevel(-1);
 		}
+		
+		public function add_frost():void{
+			trace("FROST");
+			vessel.adjust_friction(+10);
+		}
 		// *********************************************
 		
 		private function attributeGain(_attr:Attribute,ves:Vessel):void{

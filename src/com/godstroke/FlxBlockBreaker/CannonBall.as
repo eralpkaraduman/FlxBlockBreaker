@@ -13,6 +13,9 @@ package com.godstroke.FlxBlockBreaker
 		private var vessel_friction:Number = 0.002; // used for calculating magnus force
 		private var angle_delta:Number = 0;
 		private var max_angle_delta:Number = 25;
+		private var base_max_velocity:Number =180
+		
+		private var hitBreakableCount:Number = 0;
 		
 		private var direction:Point;
 		
@@ -20,8 +23,8 @@ package com.godstroke.FlxBlockBreaker
 		{
 			super(X, Y);
 			_vessel = vessel;
-			maxVelocity.x = 180;
-			maxVelocity.y = 180;
+			maxVelocity.x = base_max_velocity;
+			maxVelocity.y = base_max_velocity;
 			direction =new Point(0,0); // 0 adds no acceleration
 		}
 		
@@ -118,6 +121,10 @@ package com.godstroke.FlxBlockBreaker
 			}else if(!docked){
 				velocity.y += direction.y*defaultAcceleration;
 				velocity.x += direction.x*defaultAcceleration;
+				
+				maxVelocity.x = base_max_velocity + hitBreakableCount*1.5;
+				maxVelocity.y = base_max_velocity + hitBreakableCount*1.5;
+				
 				/*
 				angle_delta += (current_magnus_force/1000);
 				trace(angle_delta);
@@ -138,15 +145,17 @@ package com.godstroke.FlxBlockBreaker
 		}
 		
 		public function hitBreakableCase(Contact:FlxCore=null):void{
-			if(Contact is Breakable){
-				
+			if(Contact is Breakable){ // YES that's a breable we just hit.
 				Breakable(Contact).hit();
 				 if(direction.x == 0 && x<= FlxG.width/2){
 					//direction.x = -0.01;
 				}
 				else if(direction.x == 0 && x> FlxG.width/2){
 					//direction.x = 0.01;
-				} 
+				}
+				// increase the cunt so we can adjust speed bonus
+				hitBreakableCount++
+				trace("hitBreakableCount "+hitBreakableCount);
 			}
 		}
 		
