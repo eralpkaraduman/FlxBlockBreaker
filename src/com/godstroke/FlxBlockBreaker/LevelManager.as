@@ -34,6 +34,7 @@ package com.godstroke.FlxBlockBreaker
 		"0000000000000";
 		
 		private var level2:String = 
+		"0000000000000-"+
 		"0000003000000-"+
 		"0000223110000-"+
 		"0002233311000-"+
@@ -96,10 +97,11 @@ package com.godstroke.FlxBlockBreaker
 			//levelArray.add(testLevel);
 			
 			//levelArray.push(hiLevel);
+			//levelArray.push(hiLevel);
 			levelArray.push(level0);
 			levelArray.push(level1);
 			levelArray.push(level2);
-			levelArray.push(level2);
+			levelArray.push(level3);
 			
 			_game = game;
 			_position = position;

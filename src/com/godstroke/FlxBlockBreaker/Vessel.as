@@ -8,14 +8,17 @@ package com.godstroke.FlxBlockBreaker
 		private var baseWidth:int =60; // minimum width, this can be multiplied by bonuses
 		public var widthLevel:int = 2; // max 3
 		
-		public var frictionLevel:int = 2; // hard 30
+		private var base_friction_level:Number =1;
+		private var max_friction_level:Number =32;
+		public var frictionLevel:Number = base_friction_level; // hard 30
 		private var defaultAcceleration:int = 20;
 		private var lives:Number = 3;
+		private var base_color:uint = 0xff3a5c39;
 		
 		public function Vessel(X:int=0, Y:int=0)
 		{
 			super(X, Y);
-			createGraphic(baseWidth*widthLevel,10,0xff3a5c39);
+			createGraphic(baseWidth*widthLevel,10,base_color);
 			maxVelocity.x = 450;
 		}
 		
@@ -51,8 +54,12 @@ package com.godstroke.FlxBlockBreaker
 				velocity.x += defaultAcceleration;
 			}else{
 				velocity.x += (0 - velocity.x)/frictionLevel;
+				
 			}
 			checkBounds();
+			adjust_friction(-0.01);
+			// if friction is positive, over time it should go back to normal
+			
 			
 			super.update();
 		}
@@ -75,6 +82,18 @@ package com.godstroke.FlxBlockBreaker
 			if(widthLevel>3){widthLevel = 3; return;}
 			createGraphic(baseWidth*widthLevel,10,0xff3a5c39);
 			x-=(delta*baseWidth)/2; // centerize;
+		}
+		
+		public function adjust_friction(by:Number=0):void{
+			frictionLevel+=by;
+			if(frictionLevel<base_friction_level)frictionLevel=base_friction_level;
+			if(frictionLevel>max_friction_level)frictionLevel=max_friction_level;
+			//trace((base_friction_level/frictionLevel));
+			
+			
+			//trace( String(base_color).substr( String(base_color).indexOf("x")+1 ) );
+			
+			//this.color=((base_friction_level/frictionLevel)*base_color);
 		}
 		
 	}
