@@ -5,7 +5,7 @@ package com.godstroke.FlxBlockBreaker
 
 	public class Vessel extends FlxSprite
 	{
-		private var baseWidth:int =60; // minimum width, this can be multiplied by bonuses
+		private var baseWidth:int =40; // minimum width, this can be multiplied by bonuses
 		public var widthLevel:int = 2; // max 3
 		
 		private var base_friction_level:Number =1;
@@ -18,7 +18,7 @@ package com.godstroke.FlxBlockBreaker
 		public function Vessel(X:int=0, Y:int=0)
 		{
 			super(X, Y);
-			createGraphic(baseWidth*widthLevel,10,base_color);
+			createGraphic(baseWidth*widthLevel,5,base_color);
 			maxVelocity.x = 450;
 		}
 		
@@ -56,12 +56,13 @@ package com.godstroke.FlxBlockBreaker
 				velocity.x += (0 - velocity.x)/frictionLevel;
 				
 			}
-			checkBounds();
+			
 			adjust_friction(-0.01);
 			// if friction is positive, over time it should go back to normal
 			
 			
 			super.update();
+			checkBounds();
 		}
 		
 		protected function checkBounds():void{
@@ -80,7 +81,7 @@ package com.godstroke.FlxBlockBreaker
 			// limits
 			if(widthLevel<1){widthLevel = 1; return;} 
 			if(widthLevel>3){widthLevel = 3; return;}
-			createGraphic(baseWidth*widthLevel,10,0xff3a5c39);
+			createGraphic(baseWidth*widthLevel,5,0xff3a5c39);
 			x-=(delta*baseWidth)/2; // centerize;
 		}
 		

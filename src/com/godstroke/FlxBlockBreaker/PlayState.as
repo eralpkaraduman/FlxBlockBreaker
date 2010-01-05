@@ -31,8 +31,8 @@ package com.godstroke.FlxBlockBreaker
 			
 			// BASIC OBJECTS
 			// - walls
-			var wallWidth:int = 10;
-			var wallHeight:int = 400;
+			var wallWidth:int = 5;
+			var wallHeight:int = 200;
 			var wallColor:Number = 0xff3a5c39;
 			
 			leftWall = new FlxSprite(0,0);
@@ -54,13 +54,14 @@ package com.godstroke.FlxBlockBreaker
 			add(topWall);
 			
 			// - Vessel
-			vessel = new Vessel(0,400);
+			vessel = new Vessel(0,200);
 			vessel.fixed =true;
 			vessel.x = FlxG.width/2 - vessel.width/2;
 			add(vessel);
 			
 			// - levels
-			level_manager =new LevelManager(this,new Point(15,15));
+			/* level_manager =new LevelManager(this,new Point(5,5+3)); */
+			level_manager =new LevelManager(this,new Point(8,8)); 
 			level_manager.makeNextLevel();
 			
 			// - Displays

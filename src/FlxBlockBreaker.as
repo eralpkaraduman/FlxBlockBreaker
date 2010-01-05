@@ -4,14 +4,14 @@ package
 	
 	import org.flixel.*;
 	
-	[SWF(width="480",height="480", frameRate="60", backgroundColor="#1B1B1B")]
+	[SWF(width="247",height="240", frameRate="32", backgroundColor="#1B1B1B")]
 	[Frame(factoryClass="Preloader")]
 
 	public class FlxBlockBreaker extends FlxGame
 	{
 		public function FlxBlockBreaker()
 		{
-			super(480,480,MenuState,1);
+			super(247,240,MenuState,1);
 			showLogo = false;
 			useDefaultHotKeys = true;
 		}

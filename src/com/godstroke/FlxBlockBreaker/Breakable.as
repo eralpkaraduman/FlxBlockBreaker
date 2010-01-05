@@ -14,7 +14,7 @@ package com.godstroke.FlxBlockBreaker
 		public function Breakable(index:int,lives:Number,color:Number,levelManager:LevelManager)
 		{
 			super();
-			createGraphic(30,10,color);
+			createGraphic(15,5,color);
 			
 			_LevelManager = levelManager;
 			_lives = lives;

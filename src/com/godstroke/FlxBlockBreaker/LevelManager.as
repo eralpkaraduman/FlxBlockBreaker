@@ -76,16 +76,8 @@ package com.godstroke.FlxBlockBreaker
 		"0010010020300";
 		
 		private var testLevel:String = 
-		"0000000000-"+
-		"0000000000-"+
-		"0000000000-"+
-		"0000000000-"+
-		"0000000000-"+
-		"0000000000-"+
-		"0000000000-"+
-		"0001000000-"+
-		"0000000000-"+
-		"0000000000";
+		"11-"+
+		"11";
 		
 		
 		
@@ -96,7 +88,7 @@ package com.godstroke.FlxBlockBreaker
 			levelArray = new Array();
 			//levelArray.add(testLevel);
 			
-			//levelArray.push(hiLevel);
+			//levelArray.push(testLevel);
 			//levelArray.push(hiLevel);
 			levelArray.push(level0);
 			levelArray.push(level1);
@@ -140,7 +132,7 @@ package com.godstroke.FlxBlockBreaker
 			var rows:Array = str.split(layerDelimiter);
 			var yindex:Number = 0;
 			var xindex:Number = 0;
-			var margin:Number = 5;
+			var margin:Number = 3;
 			
 			var block_index:Number = 0;
 			for each(var row:String in rows){

@@ -13,7 +13,7 @@ package com.godstroke.FlxBlockBreaker
 		private var vessel_friction:Number = 0.002; // used for calculating magnus force
 		private var angle_delta:Number = 0;
 		private var max_angle_delta:Number = 25;
-		private var base_max_velocity:Number =180
+		private var base_max_velocity:Number =100
 		
 		private var hitBreakableCount:Number = 0;
 		
@@ -22,6 +22,7 @@ package com.godstroke.FlxBlockBreaker
 		public function CannonBall(vessel:Vessel,X:int=0, Y:int=0)
 		{
 			super(X, Y);
+			createGraphic(5,5,0xffffffff);
 			_vessel = vessel;
 			maxVelocity.x = base_max_velocity;
 			maxVelocity.y = base_max_velocity;
